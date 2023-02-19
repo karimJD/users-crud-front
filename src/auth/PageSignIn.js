@@ -6,7 +6,7 @@ import { Formiz, useForm } from "@formiz/core";
 import InputField from "./_partials/InputField";
 import { login } from "./auth.service";
 
-const SignIn = () => {
+const PageSignIn = () => {
   const signinForm = useForm();
   const navigate = useNavigate();
 
@@ -14,12 +14,12 @@ const SignIn = () => {
     try {
       const result = await login(values);
       localStorage.setItem("token", result.data);
-      console.log(result);
       navigate("users");
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <Formiz connect={signinForm} onValidSubmit={handleSubmit}>
       <Flex h="100vh" alignItems="center" justifyContent="center">
@@ -68,4 +68,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default PageSignIn;

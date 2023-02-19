@@ -1,8 +1,7 @@
 import axios from "axios";
 
-export const userRegistration = (user) => {
-  console.log(user);
-  axios
+export const userRegistration = async (user) => {
+  await axios
     .post(`http://localhost:5000/api/users`, {
       name: user.name,
       username: user.username,

@@ -1,35 +1,42 @@
 import React from "react";
 
 import { Flex, Heading, Button, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formiz, useForm } from "@formiz/core";
 import { isEmail } from "@formiz/validations";
 
 import InputField from "./_partials/InputField";
 import { userRegistration } from "./auth.service";
 
-const SignUp = () => {
+const PageSignUp = () => {
   const signupForm = useForm();
+  const navigate = useNavigate();
 
-  const handleSubmit = (values) => {
-    userRegistration(values);
+  const handleSubmit = async (values) => {
+    try {
+      userRegistration(values);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <Formiz connect={signupForm} onValidSubmit={handleSubmit}>
-      <Flex h="100vh" alignItems="center" justifyContent="center">
-        <Flex
-          flexDirection="column"
-          bg="gray.700"
-          p={12}
-          borderRadius={8}
-          boxShadow="lg"
-        >
-          <Heading mb={6}>Sign up</Heading>
-          <form
-            noValidate // Disable native html validation
-            onSubmit={signupForm.submit}
+      <form
+        noValidate // Disable native html validation
+        onSubmit={signupForm.submit}
+      >
+        <Flex h="100vh" alignItems="center" justifyContent="center">
+          <Flex
+            flexDirection="column"
+            bg="gray.700"
+            p={12}
+            borderRadius={8}
+            boxShadow="lg"
           >
+            <Heading mb={6}>Sign up</Heading>
+
             <Flex flexDirection="row">
               <InputField
                 name="name"
@@ -80,11 +87,11 @@ const SignUp = () => {
                 Sign in
               </Text>
             </Flex>
-          </form>
+          </Flex>
         </Flex>
-      </Flex>
+      </form>
     </Formiz>
   );
 };
 
-export default SignUp;
+export default PageSignUp;

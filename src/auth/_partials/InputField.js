@@ -13,7 +13,7 @@ const InputField = (props) => {
     setValue,
     value,
   } = useField(props);
-  const { label, type, required } = props;
+  const { label, type, required, placeholder } = props;
   const [isFocused, setIsFocused] = React.useState(false);
   const showError = !isValid && !isFocused && (!isPristine || isSubmitted);
 
@@ -35,7 +35,7 @@ const InputField = (props) => {
         onBlur={() => setIsFocused(false)}
         aria-invalid={!isValid}
         aria-describedby={!isValid ? `${id}-error` : null}
-        placeholder="Jhone Doe"
+        placeholder={placeholder}
         variant="filled"
         mb={3}
         mr={2}

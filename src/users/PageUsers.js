@@ -1,53 +1,32 @@
 import React, { useEffect, useState } from "react";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tfoot,
-  Tr,
-  Th,
-  Td,
-  TableContainer,
-} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, TableContainer } from "@chakra-ui/react";
 import { getUsers } from "./user.service";
+import UserRow from "./_partials/UserRow";
 
 const PageUsers = () => {
-  const [data, setData] = useState();
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    getUsers().then((response) => setUsers(response.data));
+  }, []);
 
   return (
     <TableContainer p={5}>
       <Table variant="simple">
         <Thead>
           <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
+            <Th>Name</Th>
+            <Th>Username</Th>
+            <Th>Email</Th>
+            <Th>Actions</Th>
           </Tr>
         </Thead>
+
         <Tbody>
-          <Tr>
-            <Td>inches</Td>
-            <Td>millimetres (mm)</Td>
-            <Td isNumeric>25.4</Td>
-          </Tr>
-          <Tr>
-            <Td>feet</Td>
-            <Td>centimetres (cm)</Td>
-            <Td isNumeric>30.48</Td>
-          </Tr>
-          <Tr>
-            <Td>yards</Td>
-            <Td>metres (m)</Td>
-            <Td isNumeric>0.91444</Td>
-          </Tr>
+          {users.map((user) => {
+            return <UserRow user={user} />;
+          })}
         </Tbody>
-        <Tfoot>
-          <Tr>
-            <Th>To convert</Th>
-            <Th>into</Th>
-            <Th isNumeric>multiply by</Th>
-          </Tr>
-        </Tfoot>
       </Table>
     </TableContainer>
   );
